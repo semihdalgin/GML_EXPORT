@@ -1,0 +1,361 @@
+<NCXML NCOwner="NcScript"><Script><Extension>.nvb</Extension><Content>'Yazan Dr. Semih DALÐIN
+'Tarih 08.5.2017 15:09:34
+'Aciklama 
+
+Sub Main()
+Dim i,circlesay, lyr1,abc,AD,txtLy, pc, WKT, ssd
+dim dlg
+dim xx (5000,2)
+dim ikinci
+
+'*** NetcadProjection.ProjectionType degerleri
+const PR_NONE                        = 0  '        { Undefined }
+const PR_GEO                         = 1  '        { Geographic }
+const PR_UTM                         = 2  '        { Universal Transverse Mercator }
+const PR_UTM3                        = 3  '        { Universal Transverse Mercator 3º Dilim}
+const PR_TM                          = 4  '        { Transverse Mercator }
+const PR_LAMCC                       = 5  '        { Lambert Conformal Conic }
+const PR_LAMAZ                       = 6  '        { Lambert Azimuthal Equal Area }
+const PR_ALBERS                      = 7  '        { Albers Conical Equal Area }
+const PR_MERCAT                      = 8  '        { Mercator }
+const PR_STEREO                      = 9  '        { Stereographic }
+const PR_AZMEQD                      =10  '        { Azimuthal Equidistant }
+const PR_GNOMON                      =11  '        { Gnomonic }
+const PR_ORTHO                       =12  '        { Orthographic }
+const PR_PS                          =13  '        { Polar Stereographic }
+const PR_POLYC                       =14  '        { Polyconic }
+const PR_SNSOID                      =15  '        { Sinusoidal }
+const PR_EQRECT                      =16  '        { Equirectangular }
+const PR_MILLER                      =17  '        { Miller Cylindrical }
+const PR_VGRINT                      =18  '        { Van der Grinten }
+const PR_ROBIN                       =19  '        { Robinson }
+
+'*** NetcadProjection.Datum degerleri
+const DATUM_KULTN = -1                'Kullanýcý Tanýmlý
+const DATUM_WGS84 =  0                'WGS-84
+const DATUM_GRS80 =  1                'GRS80 Yönetmelik Ýçin Datum
+const DATUM_AUA   =  2                'AUSTRALIAN GEODETIC 1966
+const DATUM_AUG   =  3                'AUSTRALIAN GEODETIC 1984
+const DATUM_EUR_M =  4                'EUROPEAN 1950, Mean (3 Param)
+const DATUM_EUR_A =  5                'EUROPEAN 1950, Western Europe
+const DATUM_EUR_B =  6                'EUROPEAN 1950, Greece
+const DATUM_EUR_C =  7                'EUROPEAN 1950, Norway &amp; Finland
+const DATUM_EUR_D =  8                'EUROPEAN 1950, Portugal &amp; Spain
+const DATUM_EUR_E =  9                'EUROPEAN 1950, Cyprus
+const DATUM_EUR_F = 10                'EUROPEAN 1950, Egypt
+const DATUM_EUR_G = 11                'EUROPEAN 1950, England, Channel
+const DATUM_EUR_H = 12                'EUROPEAN 1950, Iran
+const DATUM_EUR_I = 13                'EUROPEAN 1950, Sardinia(Italy)
+const DATUM_EUR_J = 14                'EUROPEAN 1950, Sicily(Italy)
+const DATUM_EUR_K = 15                'EUROPEAN 1950, England, Ireland
+const DATUM_EUR_L = 16                'EUROPEAN 1950, Malta
+const DATUM_EUR_S = 17                'EUROPEAN 1950, Iraq, Israel
+const DATUM_EUR_T = 18                'EUROPEAN 1950, Tunisia
+const DATUM_EUS   = 19                'EUROPEAN 1979
+const DATUM_FAH   = 20                'OMAN
+const DATUM_FLO   = 21                'OBSERVATORIO MET. 1939, Flores
+const DATUM_FOT   = 22                'FORT THOMAS 1955, Leeward Is.
+const DATUM_GAA   = 23                'GAN 1970, Rep. of Maldives
+const DATUM_GEO   = 24                'GEODETIC DATUM 1949, NZ
+const DATUM_GIZ   = 25                'DOS 1968, Gizo Island
+const DATUM_GRA   = 26                'GRACIOSA BASE SW 1948, Azores
+const DATUM_GUA   = 27                'GUAM 1963
+const DATUM_GSE   = 28                'GUNUNG SEGARA, Indonesia
+const DATUM_HEN   = 29                'HERAT NORTH, Afghanistan
+const DATUM_HER   = 30                'HERMANNSKOGEL, old Yugoslavia
+const DATUM_HIT   = 31                'PROVISIONAL SOUTH CHILEAN 1963
+const DATUM_HJO   = 32                'HJORSEY 1955, Iceland
+const DATUM_HKD   = 33                'HONG KONG 1963
+const DATUM_HTN   = 34                'HU-TZU-SHAN, Taiwan
+const DATUM_IBE   = 35                'BELLEVUE (IGN), Efate Is.
+const DATUM_IDN   = 36                'INDONESIAN 1974
+const DATUM_IND_B = 37                'INDIAN, Bangladesh
+const DATUM_IND_I = 38                'INDIAN, India &amp; Nepal
+const DATUM_IND_P = 39                'INDIAN, Pakistan
+const DATUM_INF_A = 40                'INDIAN 1954, Thailand
+const DATUM_ING_A = 41                'INDIAN 1960, Vietnam 16N
+const DATUM_ING_B = 42                'INDIAN 1960, Con Son Island
+const DATUM_INH_A = 43                'INDIAN 1975, Thailand
+const DATUM_INH_A1= 44                'INDIAN 1975, Thailand
+const DATUM_IRL   = 45                'IRELAND 1965
+const DATUM_ISG   = 46                'ISTS 061 ASTRO 1968, S Georgia
+const DATUM_IST   = 47                'ISTS 073 ASTRO 1969, Diego Garc
+const DATUM_JOH   = 48                'JOHNSTON ISLAND 1961
+const DATUM_KAN   = 49                'KANDAWALA, Sri Lanka
+const DATUM_KEG   = 50                'KERGUELEN ISLAND 1949
+const DATUM_KEA   = 51                'KERTAU 1948, W Malaysia &amp; Sing.
+const DATUM_KUS   = 52                'KUSAIE ASTRO 1951, Caroline Is.
+const DATUM_LCF   = 53                'L.C. 5 ASTRO 1961, Cayman Brac
+const DATUM_LEH   = 54                'LEIGON, Ghana
+const DATUM_LIB   = 55                'LIBERIA 1964
+const DATUM_LUZ_A = 56                'LUZON, Phillipines
+const DATUM_LUZ_B = 57                'LUZON, Mindanao Island
+const DATUM_MAS   = 58                'MASSAWA, Ethiopia
+const DATUM_MER   = 59                'MERCHICH, Morocco
+const DATUM_MID   = 60                'MIDWAY ASTRO 1961, Midway Is.
+const DATUM_MIK   = 61                'MAHE 1971, Mahe Is.
+const DATUM_MIN_A = 62                'MINNA, Cameroon
+const DATUM_MIN_B = 63                'MINNA, Nigeria
+const DATUM_MOD   = 64                'ROME 1940, Sardinia
+const DATUM_MPO   = 65                'M"PORALOKO, Gabon
+const DATUM_MVS   = 66                'VITI LEVU 1916, Viti Levu Is.
+const DATUM_NAH_A = 67                'NAHRWAN, Masirah Island (Oman)
+const DATUM_NAH_B = 68                'NAHRWAN, United Arab Emirates
+const DATUM_NAH_C = 69                'NAHRWAN, Saudi Arabia
+const DATUM_NAP   = 70                'NAPARIMA, Trinidad &amp; Tobago
+const DATUM_NAR_A = 71                'NORTH AMERICAN 1983, Alaska
+const DATUM_NAR_B = 72                'NORTH AMERICAN 1983, Canada
+const DATUM_NAR_C = 73                'NORTH AMERICAN 1983, CONUS
+const DATUM_NAR_D = 74                'NORTH AMERICAN 1983, Mexico
+const DATUM_OGB_M = 75                'ORDNANCE GB 1936, Mean (3 Para)
+const DATUM_OGB_A = 76                'ORDNANCE GB 1936, England
+const DATUM_OGB_B = 77                'ORDNANCE GB 1936, Eng., Wales
+const DATUM_OGB_C = 78                'ORDNANCE GB 1936, Scotland
+const DATUM_OGB_D = 79                'ORDNANCE GB 1936, Wales
+const DATUM_WGS72 = 80                'WGS-72
+const DATUM_EUR_7 = 81                'EUROPEAN 1950, Mean (7 Param)
+const DATUM_OGB_7 = 82                'ORDNANCE GB 1936, Mean (7 Para)
+const DATUM_TUR_1 = 83                'ED-50 TURKIYE (7 Param)
+
+	with Netcad
+	' Aktif Projenin Projeksiyonunu ögren
+      .FindWorld 
+      
+      set InProj = .NewProjection
+      InProj.GetFromCurrentProject
+      
+      a=InProj.ProjectionType
+      ab=InProj.Datum       
+      abc=InProj.Zone
+      abcd=InProj.GetAsEPSG
+      
+      if .EscPressed then
+	                msgbox "Ýþlemi Ýptal Ettiniz"
+	                .ClosePercent
+	                .FindWorld
+	              exit sub
+	            end if
+      
+      if a=0 then
+      msgbox "Projeksiyon Tanýmsýz Lütfen Projeksiyon Tanýmlayýn"
+      
+      set dlg = .newbdialog("Projeksiyon Seçimi Yapýnýz")
+      dlg.getCombo "inPro","Girdi Projeksiyonu",createProjList,1
+      dlg.getcombo "inDat","Girdi Datumu",createDatumList,0
+      dlg.getString "inZo","UTM ise DOM Giriniz (derece)","30",3  
+	      if dlg.showmodal then
+	      	inPrs  = getProjection(dlg.valueByName("inPro"))
+	      	inDats = getDatum(dlg.ValueByName("inDat"))
+	      	if isNumeric(dlg.valuebyname("inZo")) then
+	        	inZos = dlg.valuebyname("inZo")
+	      	else
+	        	inZos = 30
+	      	end if
+	      	if .EscPressed then
+	                msgbox "Ýþlemi Ýptal Ettiniz"
+	                .ClosePercent
+	                .FindWorld
+	              exit sub
+	            end if
+	      set pc = Netcad.NewProjection
+	      pc.ProjectionType = inPrs
+	  	  pc.Zone = inZos
+	      pc.Datum = inDats
+	      pc.SetToCurrentProject TRUE
+	      Netcad.FindWorld
+	      end if
+	  	  set dlg = Nothing  
+	  end if
+
+      'Koordinatlarý al
+      
+    set SEL = .NewSelectionSet   ' Yeni kume yarat
+    set o = .NewObject
+    Do
+    if SEL.SELECT("Kapalý Alan Seçiniz",array(opline)) then  ' istenen turleri kumeye ekle
+    
+    			if .EscPressed then
+	                msgbox "Ýþlemi Ýptal Ettiniz"
+	                .ClosePercent
+	                .FindWorld
+	              exit sub
+	            end if	 	 
+	 end if
+	            
+     Loop Until SEL.NE=1
+      
+      for i = 0 to 0                ' kumenin her bir elemani icin
+         j = SEL.GetSelectedObject(i, o)    ' objeyi ve gercek indeksini al
+         set p = .getplineext(o)            ' objenin noktalarini tutan pline yapisini yy
+         
+         yy=p.num-1
+         
+          for m = 0 to p.num-1                  ' coklu dogrunun herbir noktasi icin
+            xx(m,0)=p.cor(m).y
+            xx(m,1)=p.cor(m).x
+          next
+
+          .putplineext o,p            ' noktalari yenile
+          .putobject j, o                    ' objeyi geri koy
+                'SEL.RedrawAndRewind                  ' secim kumesini toplu kendi renginde
+                                ' cizdir ve kumeyi basa sardir.
+		    set SEL = nothing
+		    set o = nothing
+		    
+      next
+
+		    
+		    gml1="&lt;?xml version="
+		    gml11="1.0"
+		    gml12=" encoding="
+		    gml13="UTF-8"
+		    gml14=" ?&gt;&lt;ogr:FeatureCollection xmlns:xsi="
+		    gml141="http://www.w3.org/2001/XMLSchema-instance"
+		    gml142=" xsi:schemaLocation="
+		    gml143=" xmlns:ogr="
+		    gml15="http://ogr.maptools.org/"
+		    gml16=" xmlns:gml="
+		    gml17="http://www.opengis.net/gml"
+		    gml18="&gt;&lt;gml:boundedBy&gt;&lt;gml:Box&gt;&lt;gml:coord&gt;&lt;gml:X&gt;"
+		    gml2="&lt;/gml:X&gt;&lt;gml:Y&gt;"
+		    gml3="&lt;/gml:Y&gt;&lt;gml:Z&gt;0&lt;/gml:Z&gt;&lt;/gml:coord&gt;&lt;gml:coord&gt;&lt;gml:X&gt;"
+		    gml4="&lt;/gml:X&gt;&lt;gml:Y&gt;"
+		    gml5="&lt;/gml:Y&gt;&lt;gml:Z&gt;0&lt;/gml:Z&gt;&lt;/gml:coord&gt;&lt;/gml:Box&gt;&lt;/gml:boundedBy&gt;&lt;gml:featureMember&gt;"
+		    gml51="&lt;ogr:qgis fid="
+		    gml511="qgis.0"
+		    gml52="&gt;&lt;ogr:geometryProperty&gt;&lt;gml:Polygon srsName="
+		    gml53="EPSG:"
+		    gml55="&gt;&lt;gml:outerBoundaryIs&gt;&lt;gml:LinearRing&gt;&lt;gml:coordinates&gt;"
+		   
+		    gml6="&lt;/gml:coordinates&gt;&lt;/gml:LinearRing&gt;&lt;/gml:outerBoundaryIs&gt;&lt;/gml:Polygon&gt;&lt;/ogr:geometryProperty&gt;&lt;/ogr:qgis&gt;&lt;/gml:featureMember&gt;&lt;/ogr:FeatureCollection&gt;"
+		    
+		    gml19= gml1&amp; """" &amp; gml11 &amp; """" &amp; gml12 &amp; """" &amp; gml13&amp; """" &amp;gml14&amp; """" &amp;gml141&amp; """" &amp;gml142&amp; """" &amp; """" &amp; gml143&amp; """" &amp;gml15&amp; """" &amp;gml16&amp; """" &amp;gml17&amp; """" &amp;gml18
+		    gml58=gml5&amp;gml51&amp; """" &amp;gml511 &amp; """" &amp;gml52&amp; """" &amp;gml53&amp; abcd&amp; """" &amp;gml55
+		    
+		    gmls2="&lt;/gml:coordinates&gt;&lt;/gml:LinearRing&gt;&lt;/gml:outerBoundaryIs&gt;&lt;gml:innerBoundaryIs&gt;&lt;gml:LinearRing&gt;&lt;gml:coordinates&gt;"
+		    
+		    dim Maxx,Minx
+		    
+			For i = 0 To yy
+		    If xx(i,0) &gt; Maxx Then 
+		    Maxx = xx(i,0)
+		    end if
+		    If xx(i,0) &lt; Minx Then 
+		    Minx = xx(i,0)
+		    else
+		    Minx=xx(i,0)
+		    end if
+			Next	
+			
+			dim Maxy,Miny
+		    
+			For i = 0 To yy
+		    If xx(i,1) &gt; Maxy Then 
+		    Maxy = xx(i,1)
+		    end if
+		    If xx(i,1) &lt; Miny Then 
+		    Miny = xx(i,1)
+		    else
+		    Miny=xx(i,1)
+		    end if
+			Next	
+		    
+		    gmls1=gml19&amp;Minx&amp;gml2&amp;Miny&amp;gml3&amp;Maxx&amp;gml4&amp;Maxy&amp;gml58
+		    
+		    iii=0
+		    
+		    Do
+		    if iii=0 then
+		    	gmls1=gmls1&amp;xx(iii,0)&amp;"," &amp;xx(iii,1)&amp;","
+		    	
+		    else
+		    	if xx(iii-1,0)=xx(0,0) then
+		    	ikinci=iii
+		    	exit do
+
+		    	else
+		    	gmls1=gmls1&amp;"0"&amp;" "&amp; xx(iii,0)&amp;","&amp;xx(iii,1)&amp;","
+		    	end if
+		    end if
+		    iii=iii+1
+		    Loop Until iii=yy
+		        gmls1=gmls1&amp;"0 "
+		        
+		        
+		    if ikinci&lt;yy then
+		        gmls1=gmls1&amp;gmls2
+		        gmls1=gmls1&amp;xx(ikinci,0)&amp;"," &amp;xx(ikinci,1)&amp;","
+		        for ss= ikinci+1 to yy
+		        gmls1=gmls1&amp;"0"&amp;" "&amp; xx(ss,0)&amp;","&amp;xx(ss,1)&amp;","
+		        next
+		        gmls1=gmls1&amp;gml6
+		    else
+		    	gmls1=gmls1&amp;gml6
+		    end if 
+      
+      'Yazalým
+      
+      Dim SD
+  		Set objFSO = CreateObject("Scripting.FileSystemObject")
+  		set SD = Netcad.NewBDialog("GML Dosyasýnýn Yazýlacaðý Klasörü Seçin")
+        SD.GetFileName "item1","Dosya Adý Giriniz","","Gml Dosyalarý|*.gml|Tum Dosyalar|*.*","*"
+  		if SD.showmodal then
+		Set objeGML = objFSO.CreateTextFile(SD.ValueByName("item1"), True)
+		objeGML.Write gmls1
+        objeGML.Close
+        Set objFSO = Nothing
+		Set objeGML = Nothing 
+
+  		set SD = Nothing
+      
+        end if 
+      .ClosePercent
+      .FindWorld
+      
+	end with
+end sub
+
+Function GetNetcad_GML( GML, Projection )
+dim WKT
+   WKT = ""
+   if not Projection is nothing then
+     WKT = XMLStartTag("WKT") &amp; Projection.GetAsWKT &amp; XMLEndTag("WKT")
+   end if
+   GetNetcad_GML = XMLStartTag("NETCAD_GML") + GML + WKT + XMLEndTag("NETCAD_GML")
+End Function
+
+function createProjList
+dim projList
+  projList = "Coðrafi"&amp;"|"&amp;"UTM 3 Derece"&amp;"|"&amp;"UTM 6 Derece"
+  createProjList = projList
+end function
+
+function getProjection(i)
+  if i = 0 then
+    getProjection = PR_GEO
+  elseif i= 1 then
+    getProjection = PR_UTM3
+  elseif i = 2 then
+    getProjection = PR_UTM
+  end if
+end function
+
+function createDatumList
+dim datumList
+  datumList ="TUREF"&amp;"|"&amp;"ED50"&amp;"|"&amp;"WGS84"&amp;"|"&amp;"ITRF96"&amp;"|"&amp;"ED50 7 Param"
+  createDatumList = datumList
+end function
+
+function getDatum(i)
+  if i = 0 then
+  	getDatum = 254
+  elseif i = 1 then
+    getDatum = DATUM_EUR_M
+  elseif i= 2 then
+    getDatum = DATUM_WGS84
+  elseif i = 3 then
+    getDatum = DATUM_GRS80
+  elseif i = 4 then
+    getDatum = DATUM_TUR_1
+  end if
+end function</Content></Script></NCXML>

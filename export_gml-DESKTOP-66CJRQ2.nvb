@@ -1,0 +1,17 @@
+'Yazan Dr. Semih DALÐIN
+'Tarih 25.5.2016 15:09:34
+'Aciklama 
+
+Sub Main
+Dim i,circlesay, lyr1,abc,AD,txtLy, ssd, pc
+workflow ="C:\\Netcad7\\MODUL\\NcScript\\NWF\\SEMBOL_DUZENLE.nwfx"
+	with Netcad
+	'set pc = NetcadProjection.GetFromCurrentProject
+	'ssd=pc.get_Datum
+	'COMMAND LIST <"C:\\asdsem.xml">
+	set ssd= Netcad.NewProjection 
+	
+	msgbox ssd.get_ProjectionType 
+    end with
+end sub
+
